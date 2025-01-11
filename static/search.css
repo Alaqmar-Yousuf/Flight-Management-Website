@@ -1,0 +1,233 @@
+.flight-card, .ticket-form {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 10px 0;
+}
+.hidden {
+  display: none;
+}
+
+
+
+
+ #ticket-form-container, #generated-ticket {
+  width: 50%;
+  margin: 2rem auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#ticket-form-container:hover, #generated-ticket:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+#ticket-form-container h2, #generated-ticket h2 {
+  font-size: 2rem;
+  color: rgb(53, 24, 42);
+  margin-bottom: 1.5rem;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+#ticket-form-container p, #generated-ticket p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+#ticket-form-container strong, #generated-ticket strong {
+  font-weight: bold;
+}
+
+.form-group {
+  margin-top: 1.5rem;
+  text-align: left;
+  width: 50%;
+}
+
+.form-group label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.search-btn {
+  padding: 0.75rem 3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(53, 24, 42);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+.search-btn:hover {
+  background-color: #a10030;
+}
+
+
+
+
+
+
+
+
+.hero_txt-search h1 {
+  color: rgb(53, 24, 42);
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 250;
+  position: absolute;
+  top: 50%;
+  left: 7%;
+  font-size: 3rem;
+}
+
+.search-container {
+  text-align: center;
+  padding: 2rem;
+  width: 50%;
+  border-radius: 50px;
+  position: relative;
+  left: 22.5%;
+  top: 70%;
+}
+
+.search-container h1 {
+  font-size: 2.5rem;
+  color: rgb(53, 24, 42);
+  margin-bottom: 2rem;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.search-btn {
+  padding: 0.75rem 3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(53, 24, 42);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #a10030;
+}
+
+#results-container {
+  width: 50%;
+  max-width: 1000px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 25%;
+  gap: 20px;
+}
+
+.flight-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flight-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.flight-info h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.flight-info p {
+  font-size: 14px;
+  color: #666;
+  margin: 8px 0;
+}
+
+.flight-info p strong {
+  color: #333;
+}
+
+.no-results {
+  font-size: 18px;
+  color: #e74c3c;
+  text-align: center;
+  font-weight: 600;
+}
+
+.book-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.book-btn:hover {
+  background-color: #0056b3;
+}
+
+.book-btn:focus {
+  outline: none;
+}
+

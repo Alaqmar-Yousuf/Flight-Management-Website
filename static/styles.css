@@ -1,0 +1,72 @@
+.form {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  position: absolute;
+  left: 38%;
+  top: 22.5%;
+}
+
+
+.form-container {
+  background-color: rgba(53, 24, 42, 0.562);
+  padding: 20px;
+  border-radius: 35px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+input {
+  width: 92.5%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(53, 24, 42);
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #a10030;
+}
+
+p {
+  margin-top: 10px;
+}
+
+p a {
+  color: #a10030;
+    text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+.success {
+  color: green;
+}
+
+.danger {
+  color: red;
+}
+
+.info {
+  color: blue;
+}

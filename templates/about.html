@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About | SkyLine Airways</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}" />
+    
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <ul class="navbar">
+      <a href="/"><li>Home</li></a>
+      <a href="/search"><li>Search Flights</li></a>
+      <a href="/explore"><li>Explore</li></a>
+      <a href="/about"><li>About</li></a>
+          {% if 'username' in session %}
+            <a href="/logout"><li>{{ session['username'] }} |  Logout</li></a>
+            {% else %}
+            <a href="/login"><li>Login</li></a>
+          {% endif %}
+    </ul>
+
+    <div class="hero">
+      <img src="{{ url_for('static', filename='images/bg_about.jpg') }}" alt="SkyLine Home Background" />
+      <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
+      </div>
+
+      <div class="hero_txt-abt">
+        <h1>Get to know us!</h1>
+       <a href="#abt"><h2>Learn More</h2></a> 
+      </div>
+    </div>
+
+
+    <!-- Intro Section -->
+    <section  class="intro-section"  id="abt">
+      <h1>Who We Are</h1>
+      <p>
+        SkyLine Airways is Pakistan's premier airline, connecting travelers to
+        over 30 destinations across the country. With a commitment to
+        excellence, we offer world-class services, luxurious comfort, and
+        affordable fares to make your journey unforgettable.
+      </p>
+    </section>
+
+
+    <!-- Options Section -->
+    <section class="options-section-abt">
+      <div class="option-abt">
+        <img src="{{ url_for('static', filename='images/excellence.jpg') }}" alt="Destination 1" />
+        <h3>Excellence</h3>
+        <p>Delivering the best travel experiences to every passenger.</p>
+      </div>
+      <div class="option-abt">
+        <img src="{{ url_for('static', filename='images/innovation.jpg') }}" alt="Destination 2" />
+        <h3>Innovation</h3>
+        <p>Utilizing modern technology to redefine the aviation experience.</p>
+      </div>
+      <div class="option-abt">
+        <img src="{{ url_for('static', filename='images/customer.jpg') }}" alt="Destination 3" />
+        <h3>Customer Care</h3>
+        <p>Your satisfaction is our priority, every step of the way.</p>
+      </div>
+    </section>
+
+
+    <!-- Flight Deals Section -->
+    <section class="flight-deals-abt">
+      <h2>Our Fleet</h2>
+      <div class="deals-container-abt">
+        <div class="deal-abt">
+          <img src="{{ url_for('static', filename='images/abt-1.jpg') }}" alt="Fleet Image 1" />
+          <div class="deal-text-abt">
+            <p>
+              With a modern fleet of state-of-the-art aircraft, SkyLine Airways
+              ensures safety, efficiency, and comfort for every journey. Our
+              planes are equipped with advanced amenities to provide you with a
+              seamless experience.
+            </p>
+          </div>
+        </div>
+        <div class="deal-abt">
+          <img src="{{ url_for('static', filename='images/abt-2.jpg') }}" alt="Fleet Image 2" />
+          <div class="deal-text-abt">
+            <p>SkyLine Airways features a modern fleet equipped with advanced technology for safety, efficiency, and comfort. Each aircraft is designed with spacious interiors and cutting-edge amenities to ensure a seamless travel experience.</p>
+          </div>
+        </div>
+        <div class="deal-abt">
+          <img src="{{ url_for('static', filename='images/abt-3.jpg') }}" alt="Fleet Image 3" />
+          <div class="deal-text-abt">
+            <p>Our fleet includes environmentally friendly, fuel-efficient models suitable for both short and long-haul flights. With ergonomic designs and noise-reducing engines, we prioritize passenger comfort and sustainability.</p>
+          </div>
+        </div>
+        <div class="deal-abt">
+          <img src="{{ url_for('static', filename='images/abt-4.jpg') }}" alt="Fleet Image 4" />
+          <div class="deal-text-abt">
+            <p>Committed to innovation, SkyLine Airways delivers a premium flying experience, making every journey safe, smooth, and memorable.</p>
+          </div>
+        </div>
+      </div>
+      <a href="/explore"><button class="view-more-btn">View More Fares</button></a>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-logo">
+          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
+          <p>&copy; 2025 SkyLine Airways. All Rights Reserved.</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <a href="/"><li>Home</li></a>
+      <a href="/search"><li>Search Flights</li></a>
+      <a href="explore"><li>Explore</li></a>
+      <a href="/about"><li>About</li></a>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <ul>
+            <li>
+              <a href="https://www.facebook.com/" class="social-icon"
+                ><i class="fab fa-facebook"></i>Facebook</a
+              >
+            </li>
+            <li>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-twitter"></i>Twitter</a
+              >
+            </li>
+            <li>
+              <a href="https://www.instagram.com/" class="social-icon"
+                ><i class="fab fa-instagram"></i>Instagram</a
+              >
+            </li>
+            <li>
+              <a href="https://www.youtube.com/" class="social-icon"
+                ><i class="fab fa-youtube"></i>Youtube</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

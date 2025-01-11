@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyLine | Airways</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <ul class="navbar">
+      <a href="/"><li>Home</li></a>
+      <a href="/search"><li>Search Flights</li></a>
+      <a href="/explore"><li>Explore</li></a>
+      <a href="/about"><li>About</li></a>
+          {% if 'username' in session %}
+            <a href="/logout"><li>{{ session['username'] }} |  Logout</li></a>
+            {% else %}
+            <a href="/login"><li>Login</li></a>
+          {% endif %}
+    </ul>
+
+    <div class="hero">
+      <img src="{{ url_for('static', filename='images/home_bg.jpg') }}" alt="SkyLine Home Background" />
+      <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
+      </div>
+
+      <div class="hero_txt">
+        <h1>Sophistication and elegance await</h1>
+        <h3>Fares starting from PKR 114,400*</h3>
+        <a href="/search"><h2>Book now</h2></a>
+      </div>
+    </div>
+
+    <section class="intro-section">
+      <h1>Start planning your next trip</h1>
+      <p>
+        Thinking of travelling somewhere soon? Here are some options to help you
+        get started.
+      </p>
+    </section>
+
+    <section class="options-section">
+      <div class="option">
+        <img src="{{ url_for('static', filename='images/1.jpg') }}" alt="Destination 1" />
+        <p>Connect to 35 destinations across Australia</p>
+       <a href="/explore"> <button class="discover-btn">Discover More</button></a>
+      </div>
+      <div class="option">
+        <img src="{{ url_for('static', filename='images/2.jpg') }}" alt="Destination 2" />
+        <p>Stopover in Qatar from $14 per person</p>
+        <a href="/explore"> <button class="discover-btn">Discover More</button></a>
+      </div>
+      <div class="option">
+        <img src="{{ url_for('static', filename='images/3.jpg') }}" alt="Destination 3" />
+        <p>An exclusive offer for HBL card holders</p>
+        <a href="/explore"> <button class="discover-btn">Discover More</button></a>
+      </div>
+      <div class="option">
+        <img src="{{ url_for('static', filename='images/4.jpg') }}" alt="Destination 4" />
+        <p>Book a flight to the next F1® race</p>
+        <a href="/explore"> <button class="discover-btn">Discover More</button></a>
+      </div>
+    </section>
+
+    <section class="flight-deals">
+      <h2>Our Latest Flight Deals</h2>
+
+      <div class="deals-container">
+        <div class="deal">
+          <img src="{{ url_for('static', filename='images/5.jpg') }}" alt="Deal 1" />
+          <div class="deal-text">
+            <h3>London Heathrow</h3>
+            <p>Premium from PKR 916620</p>
+            <a href="/search"><button class="book-btn">Book Now</button></a> 
+          </div>
+        </div>
+        <div class="deal">
+          <img src="{{ url_for('static', filename='images/6.jpg') }}" alt="Deal 2" />
+          <div class="deal-text">
+            <h3>Dallas</h3>
+            <p>Economy from PKR 359503</p>
+            <a href="/search"><button class="book-btn">Book Now</button></a> 
+          </div>
+        </div>
+        <div class="deal">
+          <img src="{{ url_for('static', filename='images/7.jpg') }}" alt="Deal 3" />
+          <div class="deal-text">
+            <h3>New York</h3>
+            <p>Economy from PKR 304200</p>
+            <a href="/search"><button class="book-btn">Book Now</button></a> 
+          </div>
+        </div>
+        <div class="deal">
+          <img src="{{ url_for('static', filename='images/8.jpg') }}" alt="Deal 4" />
+          <div class="deal-text">
+            <h3>Berlin</h3>
+            <p>Economy from PKR 234778</p>
+            <a href="/search"><button class="book-btn">Book Now</button></a> 
+          </div>
+        </div>
+      </div>
+
+     <a href="/search"> <button class="view-more-btn">View More Fares</button></a>
+    </section>
+
+        <footer class="footer">
+          <div class="footer-container">
+            <div class="footer-logo">
+              <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
+              <p>&copy; 2025 SkyLine Airways. All Rights Reserved.</p>
+            </div>
+            <div class="footer-links">
+              <h3>Quick Links</h3>
+              <ul>
+                <a href="/"><li>Home</li></a>
+          <a href="/search"><li>Search Flights</li></a>
+          <a href="explore"><li>Explore</li></a>
+          <a href="/about"><li>About</li></a>
+              </ul>
+            </div>
+            <div class="footer-social">
+              <h3>Follow Us</h3>
+              <ul>
+                <li>
+                  <a href="https://www.facebook.com/" class="social-icon"
+                    ><i class="fab fa-facebook"></i>Facebook</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="social-icon"
+                    ><i class="fab fa-twitter"></i>Twitter</a
+                  >
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/" class="social-icon"
+                    ><i class="fab fa-instagram"></i>Instagram</a
+                  >
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/" class="social-icon"
+                    ><i class="fab fa-youtube"></i>Youtube</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+  </body>
+</html>
