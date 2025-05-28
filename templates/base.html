@@ -3,152 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SkyLine | Airways</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+    <title>SkyWay - Your Flight Booking Partner</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
+    {% block additional_css %}{% endblock %}
   </head>
   <body>
-    <ul class="navbar">
-      <a href="/"><li>Home</li></a>
-      <a href="/search"><li>Search Flights</li></a>
-      <a href="/explore"><li>Explore</li></a>
-      <a href="/about"><li>About</li></a>
-          {% if 'username' in session %}
-            <a href="/logout"><li>{{ session['username'] }} |  Logout</li></a>
-            {% else %}
-            <a href="/login"><li>Login</li></a>
-          {% endif %}
-    </ul>
-
-    <div class="hero">
-      <img src="{{ url_for('static', filename='images/home_bg.jpg') }}" alt="SkyLine Home Background" />
-      <div class="logo">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="{{ url_for('home') }}">
+          <i class="fas fa-plane-departure"></i>
+          <span>SkyWay</span>
+        </a>
       </div>
-
-      <div class="hero_txt">
-        <h1>Sophistication and elegance await</h1>
-        <h3>Fares starting from PKR 114,400*</h3>
-        <a href="/search"><h2>Book now</h2></a>
+      <div class="nav-links">
+        <a href="{{ url_for('home') }}" class="nav-item {% if request.endpoint == 'home' %}active{% endif %}">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <a href="{{ url_for('search') }}" class="nav-item {% if request.endpoint == 'search' %}active{% endif %}">
+          <i class="fas fa-search"></i> Search Flights
+        </a>
+        <a href="{{ url_for('explore') }}" class="nav-item {% if request.endpoint == 'explore' %}active{% endif %}">
+          <i class="fas fa-globe"></i> Explore
+        </a>
+        <a href="{{ url_for('about') }}" class="nav-item {% if request.endpoint == 'about' %}active{% endif %}">
+          <i class="fas fa-info-circle"></i> About
+        </a>
       </div>
-    </div>
-
-    <section class="intro-section">
-      <h1>Start planning your next trip</h1>
-      <p>
-        Thinking of travelling somewhere soon? Here are some options to help you
-        get started.
-      </p>
-    </section>
-
-    <section class="options-section">
-      <div class="option">
-        <img src="{{ url_for('static', filename='images/1.jpg') }}" alt="Destination 1" />
-        <p>Connect to 35 destinations across Australia</p>
-       <a href="/explore"> <button class="discover-btn">Discover More</button></a>
+      <div class="nav-auth">
+        {% if 'username' in session %}
+          <span class="welcome-text">Welcome, {{ session['username'] }}!</span>
+          <a href="{{ url_for('logout') }}" class="auth-btn logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="auth-btn login-btn">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+          <a href="{{ url_for('register') }}" class="auth-btn register-btn">
+            <i class="fas fa-user-plus"></i> Register
+          </a>
+        {% endif %}
       </div>
-      <div class="option">
-        <img src="{{ url_for('static', filename='images/2.jpg') }}" alt="Destination 2" />
-        <p>Stopover in Qatar from $14 per person</p>
-        <a href="/explore"> <button class="discover-btn">Discover More</button></a>
-      </div>
-      <div class="option">
-        <img src="{{ url_for('static', filename='images/3.jpg') }}" alt="Destination 3" />
-        <p>An exclusive offer for HBL card holders</p>
-        <a href="/explore"> <button class="discover-btn">Discover More</button></a>
-      </div>
-      <div class="option">
-        <img src="{{ url_for('static', filename='images/4.jpg') }}" alt="Destination 4" />
-        <p>Book a flight to the next F1® race</p>
-        <a href="/explore"> <button class="discover-btn">Discover More</button></a>
-      </div>
-    </section>
+    </nav>
 
-    <section class="flight-deals">
-      <h2>Our Latest Flight Deals</h2>
-
-      <div class="deals-container">
-        <div class="deal">
-          <img src="{{ url_for('static', filename='images/5.jpg') }}" alt="Deal 1" />
-          <div class="deal-text">
-            <h3>London Heathrow</h3>
-            <p>Premium from PKR 916620</p>
-            <a href="/search"><button class="book-btn">Book Now</button></a> 
-          </div>
-        </div>
-        <div class="deal">
-          <img src="{{ url_for('static', filename='images/6.jpg') }}" alt="Deal 2" />
-          <div class="deal-text">
-            <h3>Dallas</h3>
-            <p>Economy from PKR 359503</p>
-            <a href="/search"><button class="book-btn">Book Now</button></a> 
-          </div>
-        </div>
-        <div class="deal">
-          <img src="{{ url_for('static', filename='images/7.jpg') }}" alt="Deal 3" />
-          <div class="deal-text">
-            <h3>New York</h3>
-            <p>Economy from PKR 304200</p>
-            <a href="/search"><button class="book-btn">Book Now</button></a> 
-          </div>
-        </div>
-        <div class="deal">
-          <img src="{{ url_for('static', filename='images/8.jpg') }}" alt="Deal 4" />
-          <div class="deal-text">
-            <h3>Berlin</h3>
-            <p>Economy from PKR 234778</p>
-            <a href="/search"><button class="book-btn">Book Now</button></a> 
-          </div>
-        </div>
-      </div>
-
-     <a href="/search"> <button class="view-more-btn">View More Fares</button></a>
-    </section>
-
-        <footer class="footer">
-          <div class="footer-container">
-            <div class="footer-logo">
-              <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
-              <p>&copy; 2025 SkyLine Airways. All Rights Reserved.</p>
+    <!-- Main Content -->
+    <main class="main-content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+              <button type="button" class="close-alert">&times;</button>
             </div>
-            <div class="footer-links">
-              <h3>Quick Links</h3>
-              <ul>
-                <a href="/"><li>Home</li></a>
-          <a href="/search"><li>Search Flights</li></a>
-          <a href="explore"><li>Explore</li></a>
-          <a href="/about"><li>About</li></a>
-              </ul>
-            </div>
-            <div class="footer-social">
-              <h3>Follow Us</h3>
-              <ul>
-                <li>
-                  <a href="https://www.facebook.com/" class="social-icon"
-                    ><i class="fab fa-facebook"></i>Facebook</a
-                  >
-                </li>
-                <li>
-                  <a href="#" class="social-icon"
-                    ><i class="fab fa-twitter"></i>Twitter</a
-                  >
-                </li>
-                <li>
-                  <a href="https://www.instagram.com/" class="social-icon"
-                    ><i class="fab fa-instagram"></i>Instagram</a
-                  >
-                </li>
-                <li>
-                  <a href="https://www.youtube.com/" class="social-icon"
-                    ><i class="fab fa-youtube"></i>Youtube</a
-                  >
-                </li>
-              </ul>
-            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About SkyWay</h3>
+          <p>Your trusted partner for hassle-free flight bookings. We make air travel simple and accessible.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="{{ url_for('search') }}">Search Flights</a></li>
+            <li><a href="{{ url_for('explore') }}">Explore Destinations</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-envelope"></i> support@skyway.com</p>
+          <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+        </div>
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
           </div>
-        </footer>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 SkyWay. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% block additional_js %}{% endblock %}
   </body>
 </html>

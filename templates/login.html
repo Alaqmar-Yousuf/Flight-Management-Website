@@ -1,105 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='base.css') }}"
-    />
+{% extends "base.html" %}
 
-    <title>Login</title>
-  </head>
-  <body>
-    <ul class="navbar">
-      <a href="/"><li>Home</li></a>
-      <a href="/search"><li>Search Flights</li></a>
-      <a href="/explore"><li>Explore</li></a>
-      <a href="/about"><li>About</li></a>
-          {% if 'username' in session %}
-           <a href="/logout"><li>({{ session['username'] }})  Logout</li></a>
-          {% else %}
-            <a href="/login"><li>Login</li></a>
-          {% endif %}
-    </ul>
-    
-    <div class="hero">
-      <img src="{{ url_for('static', filename='images/login.jpg') }}" alt="SkyLine Home Background" />
-      <div class="logo">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
-      </div>
-      </div>
-      
+{% block content %}
+<!-- Hero Section -->
+<section class="auth-hero">
+    <div class="hero-content">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to access your account</p>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endwith %}
 
-    <div class="form">
-      <div class="form-container">
-        <h2>Login</h2>
-        {% with messages = get_flashed_messages(with_categories=true) %} {% for
-        category, message in messages %}
-        <p class="{{ category }}">{{ message }}</p>
-        {% endfor %} {% endwith %}
-        <form method="POST">
-          <input type="text" name="username" placeholder="Username" required />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-          <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="/register">Register</a></p>
-      </div>
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i>
+                        Username
+                    </label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+            </div>
+        </div>
     </div>
+</section>
 
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-logo">
-          <img
-            src="{{ url_for('static', filename='images/logo.png') }}"
-            alt="SkyLine | Airways Logo"
-          />
-          <p>&copy; 2025 SkyLine Airways. All Rights Reserved.</p>
-        </div>
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <a href="/"><li>Home</li></a>
-            <a href="/search"><li>Search Flights</li></a>
-            <a href="explore"><li>Explore</li></a>
-            <a href="/about"><li>About</li></a>
-          </ul>
-        </div>
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li>
-              <a href="https://www.facebook.com/" class="social-icon"
-                ><i class="fab fa-facebook"></i>Facebook</a
-              >
-            </li>
-            <li>
-              <a href="#" class="social-icon"
-                ><i class="fab fa-twitter"></i>Twitter</a
-              >
-            </li>
-            <li>
-              <a href="https://www.instagram.com/" class="social-icon"
-                ><i class="fab fa-instagram"></i>Instagram</a
-              >
-            </li>
-            <li>
-              <a href="https://www.youtube.com/" class="social-icon"
-                ><i class="fab fa-youtube"></i>Youtube</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-  </body>
-</html>
+<style>
+.auth-hero {
+    min-height: calc(100vh - 80px);
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.auth-header p {
+    color: var(--dark-gray);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+.auth-btn {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.auth-btn:hover {
+    background-color: #2980b9;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--light-gray);
+}
+
+.auth-footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %}

@@ -1,141 +1,399 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Flights | SkyLine Airways</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='search.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='base.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+{% extends "base.html" %}
 
-  </head>
-  <body>
-    <ul class="navbar">
-      <a href="/"><li>Home</li></a>
-      <a href="/search"><li>Search Flights</li></a>
-      <a href="/explore"><li>Explore</li></a>
-      <a href="/about"><li>About</li></a>
-      {% if 'username' in session %}
-      <a href="/logout"><li>{{ session['username'] }} | Logout</li></a>
-      {% else %}
-      <a href="/login"><li>Login</li></a>
-      {% endif %}
-    </ul>
-
-    <div class="hero">
-      <img
-        src="{{ url_for('static', filename='images/search-bg.jpg') }}"
-        alt="SkyLine Home Background"
-      />
-      <div class="logo">
-        <img
-          src="{{ url_for('static', filename='images/logo.png') }}"
-          alt="SkyLine | Airways Logo"
-        />
-      </div>
-      <div class="hero_txt-search">
-        <h1>Fly smarter, fly further</h1>
-      </div>
-    </div>
-
-        <div class="search-container">
-    <h1>Search Flights</h1>
-    <form id="flightSearchForm" class="search-form">
-      <div class="form-group">
-        <label for="departure">Departure:</label>
-        <input type="text" id="departure" name="departure" required>
-      </div>
-      <div class="form-group">
-        <label for="destination">Destination:</label>
-        <input type="text" id="destination" name="destination" required>
-      </div>
-      <button type="submit" class="search-btn">Search</button>
-    </form>
-  </div>
-
-  <div id="results-container"></div>
-
-  <div id="ticket-form-container" class="hidden">
-    <h2>Ticket Details</h2>
-    <form id="ticketForm">
-      <p><strong>Flight No:</strong> <span id="ticket-flight-no"></span></p>
-      <p><strong>Departure:</strong> <span id="ticket-departure"></span></p>
-      <p><strong>Destination:</strong> <span id="ticket-destination"></span></p>
-      <p><strong>Time:</strong> <span id="ticket-time"></span></p>
-      <p><strong>Price:</strong> $<span id="ticket-price"></span></p>
-      <div class="form-group">
-        <label for="passenger-name">Passenger Name:</label>
-        <input type="text" id="passenger-name" name="passenger-name" required>
-      </div>
-      <button type="submit" class="search-btn">Generate Ticket</button>
-    </form>
-  </div>
-
-  <div id="generated-ticket" class="hidden">
-    <h2>Your Ticket</h2>
-    <p><strong>Passenger Name:</strong> <span id="ticket-passenger-name"></span></p>
-    <p><strong>Flight No:</strong> <span id="final-ticket-flight-no"></span></p>
-    <p><strong>Departure:</strong> <span id="final-ticket-departure"></span></p>
-    <p><strong>Destination:</strong> <span id="final-ticket-destination"></span></p>
-    <p><strong>Time:</strong> <span id="final-ticket-time"></span></p>
-    <p><strong>Price:</strong> $<span id="final-ticket-price"></span></p>
-  </div>
-    
-
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-logo">
-          <img
-            src="{{ url_for('static', filename='images/logo.png') }}"
-            alt="SkyLine | Airways Logo"
-          />
-          <p>&copy; 2025 SkyLine Airways. All Rights Reserved.</p>
+{% block content %}
+<div class="search-page">
+    <!-- Search Form Section -->
+    <section class="search-section">
+        <div class="section-title">
+            <h2>Find Your Perfect Flight</h2>
+            <p>Search through thousands of flights to find the best deals</p>
         </div>
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <a href="/"><li>Home</li></a>
-            <a href="/search"><li>Search Flights</li></a>
-            <a href="explore"><li>Explore</li></a>
-            <a href="/about"><li>About</li></a>
-          </ul>
+        
+        <form id="flightSearchForm" class="search-form">
+            <div class="form-group">
+                <label for="departure">
+                    <i class="fas fa-plane-departure"></i>
+                    Departure Airport
+                </label>
+                <input type="text" id="departure" name="departure" placeholder="Enter departure airport code (e.g., LHR)" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="destination">
+                    <i class="fas fa-plane-arrival"></i>
+                    Destination Airport
+                </label>
+                <input type="text" id="destination" name="destination" placeholder="Enter destination airport code (e.g., JFK)" required>
+            </div>
+            
+            <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i>
+                Search Flights
+            </button>
+        </form>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results-container" class="results-section"></section>
+
+    <!-- Ticket Form Section -->
+    <section id="ticket-form-container" class="ticket-section hidden">
+        <h2>Complete Your Booking</h2>
+        <div id="ticket-details" class="ticket-details">
+            <p><strong>Flight Number:</strong> <span id="ticket-flight-no"></span></p>
+            <p><strong>From:</strong> <span id="ticket-departure"></span></p>
+            <p><strong>To:</strong> <span id="ticket-destination"></span></p>
+            <p><strong>Departure Time:</strong> <span id="ticket-time"></span></p>
+            <p><strong>Price:</strong> $<span id="ticket-price"></span></p>
         </div>
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li>
-              <a href="https://www.facebook.com/" class="social-icon"
-                ><i class="fab fa-facebook"></i>Facebook</a
-              >
-            </li>
-            <li>
-              <a href="#" class="social-icon"
-                ><i class="fab fa-twitter"></i>Twitter</a
-              >
-            </li>
-            <li>
-              <a href="https://www.instagram.com/" class="social-icon"
-                ><i class="fab fa-instagram"></i>Instagram</a
-              >
-            </li>
-            <li>
-              <a href="https://www.youtube.com/" class="social-icon"
-                ><i class="fab fa-youtube"></i>Youtube</a
-              >
-            </li>
-          </ul>
+        
+        <form id="ticketForm" class="ticket-form">
+            <div class="form-group">
+                <label for="passenger-name">
+                    <i class="fas fa-user"></i>
+                    Passenger Name
+                </label>
+                <input type="text" id="passenger-name" name="passenger-name" required>
+            </div>
+            <button type="submit" class="book-btn">
+                <i class="fas fa-ticket-alt"></i>
+                Book Flight
+            </button>
+        </form>
+    </section>
+
+    <!-- Generated Ticket Section -->
+    <section id="generated-ticket" class="ticket-section hidden">
+        <div class="ticket-card">
+            <div class="ticket-header">
+                <h2>Flight Ticket</h2>
+                <div class="airline-logo">
+                    <i class="fas fa-plane"></i>
+                    SkyWay
+                </div>
+            </div>
+            
+            <div class="ticket-body">
+                <div class="passenger-info">
+                    <h3>Passenger</h3>
+                    <p id="ticket-passenger-name"></p>
+                </div>
+                
+                <div class="flight-info">
+                    <div class="flight-detail">
+                        <span class="label">Flight No.</span>
+                        <span id="final-ticket-flight-no" class="value"></span>
+                    </div>
+                    <div class="flight-route">
+                        <div class="departure">
+                            <span class="label">From</span>
+                            <span id="final-ticket-departure" class="value"></span>
+                        </div>
+                        <div class="route-line">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="arrival">
+                            <span class="label">To</span>
+                            <span id="final-ticket-destination" class="value"></span>
+                        </div>
+                    </div>
+                    <div class="flight-detail">
+                        <span class="label">Departure Time</span>
+                        <span id="final-ticket-time" class="value"></span>
+                    </div>
+                    <div class="flight-detail">
+                        <span class="label">Price</span>
+                        <span class="value">$<span id="final-ticket-price"></span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ticket-footer">
+                <div class="barcode">
+                    <i class="fas fa-barcode"></i>
+                </div>
+                <p class="terms">This is an electronic ticket. Please present a valid ID at check-in.</p>
+            </div>
         </div>
-      </div>
-    </footer>
-    <script src="{{url_for('static', filename='script.js')}}"></script>
-  </body>
-</html>
+        
+        <button onclick="window.print()" class="print-btn">
+            <i class="fas fa-print"></i>
+            Print Ticket
+        </button>
+    </section>
+</div>
+
+<style>
+.search-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.search-section {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.search-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 1rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+.search-btn {
+    grid-column: span 2;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.search-btn:hover {
+    background-color: #2980b9;
+}
+
+.ticket-section {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+}
+
+.ticket-details {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+}
+
+.ticket-details p {
+    margin-bottom: 0.5rem;
+}
+
+.book-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.book-btn:hover {
+    background-color: #2980b9;
+}
+
+.ticket-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.ticket-header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.airline-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.ticket-body {
+    padding: 2rem;
+}
+
+.passenger-info {
+    margin-bottom: 2rem;
+}
+
+.flight-info {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.flight-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flight-route {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.route-line {
+    position: relative;
+    text-align: center;
+}
+
+.route-line::before,
+.route-line::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    height: 2px;
+    background-color: var(--secondary-color);
+    width: 40%;
+}
+
+.route-line::before {
+    left: 0;
+}
+
+.route-line::after {
+    right: 0;
+}
+
+.route-line i {
+    color: var(--secondary-color);
+    transform: rotate(90deg);
+}
+
+.label {
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
+
+.value {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.ticket-footer {
+    padding: 1.5rem;
+    background-color: var(--light-gray);
+    text-align: center;
+}
+
+.barcode {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.terms {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.print-btn {
+    display: block;
+    width: 200px;
+    margin: 2rem auto 0;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.print-btn:hover {
+    background-color: #34495e;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        grid-template-columns: 1fr;
+    }
+
+    .search-btn {
+        grid-column: 1;
+    }
+
+    .flight-route {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .route-line {
+        display: none;
+    }
+}
+
+@media print {
+    .navbar,
+    .search-section,
+    .results-section,
+    .ticket-form-container,
+    .print-btn {
+        display: none !important;
+    }
+
+    .ticket-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+</style>
+{% endblock %}

@@ -1,188 +1,226 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Explore | SkyLine Airways</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='explore.css') }}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-  </head>
-  <body>
-    <ul class="navbar">
-      <a href="/"><li>Home</li></a>
-      <a href="/search"><li>Search Flights</li></a>
-      <a href="/explore"><li>Explore</li></a>
-      <a href="/about"><li>About</li></a>
-          {% if 'username' in session %}
-            <a href="/logout"><li>{{ session['username'] }} |  Logout</li></a>
-            {% else %}
-            <a href="/login"><li>Login</li></a>
-          {% endif %}
-    </ul>
+{% extends "base.html" %}
 
-    <div class="hero">
-      <img src="{{ url_for('static', filename='images/explore-bg.jpg') }}" alt="SkyLine Home Background" />
-      <div class="logo">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
-      </div>
-
-      <div class="hero_txt">
-        <h1>Explore the World's Beauty</h1>
-        <h3>Find inspiration for your next trip</h3>
-        <a href="/search"><h2>Book now</h2></a>
-      </div>
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Explore the World's Beauty</h1>
+        <p class="hero-subtitle">Find inspiration for your next adventure</p>
+        <a href="{{ url_for('search') }}" class="hero-btn">
+            <i class="fas fa-plane"></i> Book Now
+        </a>
     </div>
+</section>
 
-
-
-    <!-- Explore Options -->
-    <section class="explore-section">
-      <h2>Discover Destinations</h2>
-      <div class="explore-container">
-        <div class="explore-item">
-          <img src="{{ url_for('static', filename='images/usa.jpg') }}" alt="US" />
-          <h3>United States</h3>
-          <p>Live the multicultural nation.</p>
-         <a href="/search"> <button class="discover-btn">Book Now</button></a>
+<!-- Discover Destinations -->
+<section class="destinations-section">
+    <div class="section-title">
+        <h2>Discover Destinations</h2>
+        <p>Explore our handpicked selection of amazing locations</p>
+    </div>
+    <div class="destinations-grid">
+        <div class="destination-card">
+            <img src="{{ url_for('static', filename='images/usa.jpg') }}" alt="United States">
+            <div class="destination-content">
+                <h3>United States</h3>
+                <p>Live the multicultural nation</p>
+                <a href="{{ url_for('search') }}" class="btn-explore">Book Now</a>
+            </div>
         </div>
-        <div class="explore-item">
-          <img src="{{ url_for('static', filename='images/uae.jpg') }}" alt="UAE" />
-          <h3>United Arab Emirates</h3>
-          <p>Experience breathtaking natural beauty.</p>
-          <a href="/search"> <button class="discover-btn">Book Now</button></a>
+        <div class="destination-card">
+            <img src="{{ url_for('static', filename='images/uae.jpg') }}" alt="United Arab Emirates">
+            <div class="destination-content">
+                <h3>United Arab Emirates</h3>
+                <p>Experience breathtaking luxury</p>
+                <a href="{{ url_for('search') }}" class="btn-explore">Book Now</a>
+            </div>
         </div>
-        <div class="explore-item">
-          <img src="{{ url_for('static', filename='images/uk.jpg') }}" alt="UK" />
-          <h3>United Kingdoms</h3>
-          <p>The city of lights with endless possibilities.</p>
-          <a href="/search"> <button class="discover-btn">Book Now</button></a>
+        <div class="destination-card">
+            <img src="{{ url_for('static', filename='images/uk.jpg') }}" alt="United Kingdom">
+            <div class="destination-content">
+                <h3>United Kingdom</h3>
+                <p>The city of endless possibilities</p>
+                <a href="{{ url_for('search') }}" class="btn-explore">Book Now</a>
+            </div>
         </div>
-        <div class="explore-item">
-          <img src="{{ url_for('static', filename='images/turkey.jpg') }}" alt="Turkey" />
-          <h3>Turkey</h3>
-          <p>Perfect for adventure and tranquility seekers.</p>
-          <a href="/search"> <button class="discover-btn">Book Now</button></a>
+        <div class="destination-card">
+            <img src="{{ url_for('static', filename='images/turkey.jpg') }}" alt="Turkey">
+            <div class="destination-content">
+                <h3>Turkey</h3>
+                <p>Where history meets modernity</p>
+                <a href="{{ url_for('search') }}" class="btn-explore">Book Now</a>
+            </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
-
-
-    <!-- Travel Deals Section -->
-    <section class="explore-section travel-deals">
+<!-- Travel Deals -->
+<section class="deals-section">
+    <div class="section-title">
         <h2>Exclusive Travel Deals</h2>
-        <div class="deals-container-exp">
-          <div class="deal-exp">
-            <img src="{{ url_for('static', filename='images/california.jpg') }}" alt="premium deal" />
-            <div class="deal-text-exp">
-              <h3>California</h3>
-              <p>Premium from PKR 50,000</p>
-              <a href="/search"><button class="book-btn">Book Now</button></a>
+        <p>Limited time offers on popular destinations</p>
+    </div>
+    <div class="deals-grid">
+        <div class="deal-card">
+            <img src="{{ url_for('static', filename='images/california.jpg') }}" alt="California">
+            <div class="deal-content">
+                <h3>California</h3>
+                <p class="price">Premium from PKR 50,000</p>
+                <a href="{{ url_for('search') }}" class="btn-book">Book Now</a>
             </div>
-          </div>
-          <div class="deal-exp">
-            <img src="{{ url_for('static', filename='images/5.jpg') }}" alt="London Deal" />
-            <div class="deal-text-exp">
-              <h3>London</h3>
-              <p>Economy from PKR 35,000</p>
-              <a href="/search"><button class="book-btn">Book Now</button></a>
-            </div>
-          </div>
-          <div class="deal-exp">
-            <img src="{{ url_for('static', filename='images/canada.jpg') }}" alt="Canada Deal" />
-            <div class="deal-text-exp">
-              <h3>Canada</h3>
-              <p>Economy from PKR 39,000</p>
-              <a href="/search"><button class="book-btn">Book Now</button></a>
-            </div>
-          </div>
         </div>
-      </section>
-  
+        <div class="deal-card">
+            <img src="{{ url_for('static', filename='images/5.jpg') }}" alt="London">
+            <div class="deal-content">
+                <h3>London</h3>
+                <p class="price">Economy from PKR 35,000</p>
+                <a href="{{ url_for('search') }}" class="btn-book">Book Now</a>
+            </div>
+        </div>
+        <div class="deal-card">
+            <img src="{{ url_for('static', filename='images/canada.jpg') }}" alt="Canada">
+            <div class="deal-content">
+                <h3>Canada</h3>
+                <p class="price">Economy from PKR 39,000</p>
+                <a href="{{ url_for('search') }}" class="btn-book">Book Now</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-
-      <!-- Discount Section -->
-      <section class="explore-section">
+<!-- Special Discounts -->
+<section class="discounts-section">
+    <div class="section-title">
         <h2>Special Discounts</h2>
-        <div class="explore-container">
-          <div class="explore-item">
-            <img src="{{ url_for('static', filename='images/lahore.jpg') }}" alt="Single Person Discounts" />
-            <h3>Single Person Discounts</h3>
-            <p>Travel alone and spend less.</p>
-            <a href="/search"><button class="discover-btn">Discover More</button></a>
-          </div>
+        <p>Save more on your travels with our special offers</p>
+    </div>
+    <div class="discounts-grid">
+        <div class="discount-card">
+            <img src="{{ url_for('static', filename='images/student.jpg') }}" alt="Student Discount">
+            <div class="discount-content">
+                <h3>Student Discounts</h3>
+                <p>Up to 20% off on domestic flights</p>
+                <a href="{{ url_for('search') }}" class="btn-grab">Grab Now</a>
+            </div>
+        </div>
+        <div class="discount-card">
+            <img src="{{ url_for('static', filename='images/early.jpg') }}" alt="Early Bird">
+            <div class="discount-content">
+                <h3>Early Bird Offers</h3>
+                <p>Book early and save big</p>
+                <a href="{{ url_for('search') }}" class="btn-grab">Book Now</a>
+            </div>
+        </div>
+        <div class="discount-card">
+            <img src="{{ url_for('static', filename='images/family.jpg') }}" alt="Family Discount">
+            <div class="discount-content">
+                <h3>Family Discounts</h3>
+                <p>Special rates for family travel</p>
+                <a href="{{ url_for('search') }}" class="btn-grab">Book Now</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-         
-          <div class="explore-item">
-            <img src="{{ url_for('static', filename='images/early.jpg') }}" alt="Early Bird Offer" />
-            <h3>Early Bird Offers</h3>
-            <p>Book early and save on your next trip.</p>
-            <a href="/search"><button class="discover-btn">Book Now</button></a>
-          </div>
-          <div class="explore-item">
-            <img src="{{ url_for('static', filename='images/family.jpg') }}" alt="Family Discounts" />
-            <h3>Family Discounts</h3>
-            <p>Travel with your family and save more.</p>
-            <a href="/search"><button class="discover-btn">Book Now</button></a>
-          </div>
-        </div>
-        <div class="explore-item">
-          <img src="{{ url_for('static', filename='images/student.jpg') }}" alt="Student Discount" />
-          <h3>Student Discounts</h3>
-          <p>Enjoy up to 20% off on domestic flights.</p>
-          <a href="/search"><button class="discover-btn">Grab Now</button></a>
-        </div>
-        </div>
-      </section>
+<style>
+/* Hero Section */
+.hero {
+    height: 500px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/images/explore-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
 
+/* Destinations Section */
+.destinations-section,
+.deals-section,
+.discounts-section {
+    padding: 4rem 5%;
+    background-color: var(--white);
+}
 
+.destinations-section:nth-child(even),
+.deals-section:nth-child(even),
+.discounts-section:nth-child(even) {
+    background-color: var(--light-gray);
+}
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-logo">
-          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SkyLine | Airways Logo" />
-          <p>&copy; 2025 SkyLine Airways. All Rights Reserved.</p>
-        </div>
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <a href="/"><li>Home</li></a>
-      <a href="/search"><li>Search Flights</li></a>
-      <a href="explore"><li>Explore</li></a>
-      <a href="/about"><li>About</li></a>
-          </ul>
-        </div>
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li>
-              <a href="https://www.facebook.com/" class="social-icon"
-                ><i class="fab fa-facebook"></i>Facebook</a
-              >
-            </li>
-            <li>
-              <a href="#" class="social-icon"
-                ><i class="fab fa-twitter"></i>Twitter</a
-              >
-            </li>
-            <li>
-              <a href="https://www.instagram.com/" class="social-icon"
-                ><i class="fab fa-instagram"></i>Instagram</a
-              >
-            </li>
-            <li>
-              <a href="https://www.youtube.com/" class="social-icon"
-                ><i class="fab fa-youtube"></i>Youtube</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-  </body>
-</html>
+.destinations-grid,
+.deals-grid,
+.discounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.destination-card,
+.deal-card,
+.discount-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.destination-card:hover,
+.deal-card:hover,
+.discount-card:hover {
+    transform: translateY(-5px);
+}
+
+.destination-card img,
+.deal-card img,
+.discount-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.destination-content,
+.deal-content,
+.discount-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: var(--white);
+}
+
+.btn-explore,
+.btn-book,
+.btn-grab {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-explore:hover,
+.btn-book:hover,
+.btn-grab:hover {
+    background-color: #2980b9;
+}
+
+.price {
+    font-weight: 500;
+    color: var(--white);
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .destinations-grid,
+    .deals-grid,
+    .discounts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
