@@ -1,51 +1,59 @@
 .explore-section {
     text-align: center;
-    padding: 2rem;
-    background-color: gainsboro;
+    padding: 4rem 2rem;
+    background-color: var(--bg-color);
 }
-  
+
 .explore-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: rgb(53, 24, 42);
-    font-family: 'Times New Roman', Times, serif;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
 }
-  
+
 .explore-container,
 .deals-container-exp {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+    justify-content: center;
+    gap: 2rem;
     flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-  
+
 .explore-item {
-    flex: 1 1 48%; 
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    flex: 1 1 300px;
+    border: none;
+    border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: white;
+    box-shadow: var(--shadow-md);
+    background-color: var(--white);
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: var(--transition);
 }
 
 .deal-exp {
-    flex: 1 1 calc(32% - 20px); 
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    flex: 1 1 300px;
+    border: none;
+    border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-    background-color: white;
+    box-shadow: var(--shadow-md);
+    background-color: var(--white);
     text-align: center;
-    transition: transform 0.3s ease;
-    margin: 10px; 
+    transition: var(--transition);
+    margin: 0;
 }
 
 .deal-exp img {
     width: 100%;
-    height: 200px; 
-    object-fit: cover; 
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.deal-exp:hover img {
+    transform: scale(1.1);
 }
 
 .deal-exp .text-overlay {
@@ -53,56 +61,69 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: rgba(255, 255, 255, 0.9); 
-    font-size: 1.2rem; 
-    font-weight: bold; 
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); 
-    padding: 5px 10px; 
-    background-color: rgba(0, 0, 0, 0.5); 
-    border-radius: 5px; 
+    color: var(--white);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 1rem 2rem;
+    background-color: rgba(15, 23, 42, 0.6);
+    border-radius: 50px;
+    backdrop-filter: blur(4px);
+    font-family: var(--font-heading);
 }
 
-  
+
 .explore-item:hover,
 .deal-exp:hover {
     transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
 }
-  
-.explore-item img,
-.deal-exp img {
+
+.explore-item img {
     width: 100%;
-    height: 250px; 
+    height: 250px;
     object-fit: cover;
+    transition: transform 0.5s ease;
 }
-  
+
+.explore-item:hover img {
+    transform: scale(1.1);
+}
+
 .explore-item h3,
 .deal-text-exp h3 {
-    font-size: 1.75rem;
-    color: rgb(53, 24, 42);
-    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin: 1.5rem 0 1rem;
+    font-family: var(--font-heading);
 }
-  
+
 .explore-item p,
 .deal-text-exp p {
     font-size: 1rem;
-    color: #666;
-    margin: 0 1rem 1rem;
+    color: var(--text-color);
+    margin: 0 1.5rem 1.5rem;
+    line-height: 1.6;
 }
-  
+
 .discover-btn,
 .book-btn {
-    padding: 0.5rem 1.5rem; 
+    padding: 0.75rem 2rem;
     font-size: 1rem;
-    color: white;
-    background-color: rgb(53, 24, 42);
+    color: var(--white);
+    background-color: var(--secondary-color);
     border: none;
-    border-radius: 20px;
+    border-radius: 50px;
     cursor: pointer;
-    margin-bottom: 1rem;
-    transition: background-color 0.3s ease;
+    margin-bottom: 2rem;
+    transition: var(--transition);
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
-  
+
 .discover-btn:hover,
 .book-btn:hover {
-    background-color: #a10030;
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }

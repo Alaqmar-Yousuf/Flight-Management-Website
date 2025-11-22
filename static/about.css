@@ -1,101 +1,120 @@
 .hero_txt-abt h1 {
-  color: rgb(53, 24, 42);
-  font-family: 'Times New Roman', Times, serif;
-  font-weight: 250;
+  color: var(--primary-color);
+  font-family: var(--font-heading);
+  font-weight: 700;
   position: absolute;
   top: 45%;
   left: 7%;
-  font-size: 3rem;
+  font-size: 4rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero_txt-abt h2 {
-  color: rgb(53, 24, 42);
-  font-family: 'Times New Roman', Times, serif;
-  font-weight: 900;
+  color: var(--primary-color);
+  font-family: var(--font-heading);
+  font-weight: 700;
   position: absolute;
   top: 60%;
   left: 7.5%;
-  border: 2px solid rgb(53, 24, 42);
-  border-radius: 100px;
-  padding: 15px;
-  width: 10%;
+  border: 2px solid var(--primary-color);
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
 }
 
 .hero_txt-abt h2:hover {
-  background-color: rgb(53, 24, 42);
-  color: rgb(255, 255, 255);
+  background-color: var(--primary-color);
+  color: var(--white);
+  transform: translateY(-2px);
 }
 
 
 .intro-section {
   text-align: center;
-  padding: 2rem;
-  margin: 1rem 0;
+  padding: 4rem 2rem;
+  margin: 0;
+  background-color: var(--white);
 }
 
 .intro-section h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #333;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  font-family: var(--font-heading);
 }
 
 .intro-section p {
   font-size: 1.25rem;
-  color: #666;
+  color: var(--text-color);
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
 }
 
 
 .options-section-abt {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
-  gap: 1rem;
-  padding: 2rem;
+  gap: 2rem;
+  padding: 4rem 2rem;
   flex-wrap: wrap;
+  background-color: var(--bg-color);
 }
 
 .option-abt {
-  flex: 1;
-  max-width: 30%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  flex: 1 1 300px;
+  max-width: 400px;
+  border: none;
+  border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   text-align: center;
-  transition: transform 0.3s ease;
-  background: white;
+  transition: var(--transition);
+  background: var(--white);
 }
 
 .option-abt:hover {
   transform: translateY(-10px);
+  box-shadow: var(--shadow-xl);
 }
 
 .option-abt img {
   width: 100%;
-  height: 200px; 
+  height: 250px;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.option-abt:hover img {
+  transform: scale(1.1);
 }
 
 .option-abt p {
-  font-size: 1rem;
-  color: #666;
-  margin: 1rem;
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin: 1.5rem;
+  line-height: 1.6;
 }
 
 .discover-btn {
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 2rem;
   font-size: 1rem;
-  color: #fff;
-  background-color: rgb(53, 24, 42);
+  color: var(--white);
+  background-color: var(--secondary-color);
   border: none;
-  border-radius: 20px;
+  border-radius: 50px;
   cursor: pointer;
-  margin-bottom: 1rem;
-  transition: background-color 0.3s ease;
+  margin-bottom: 2rem;
+  transition: var(--transition);
+  font-weight: 600;
 }
 
 .discover-btn:hover {
-  background-color: #a10030;
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
 }
 
 
@@ -103,66 +122,75 @@
 .flight-deals-abt {
   text-align: center;
   padding: 4rem 2rem;
-  background-color: gainsboro;
+  background-color: var(--white);
 }
 
 .flight-deals-abt h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #333;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+  font-family: var(--font-heading);
 }
 
 .deals-container-abt {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
+  gap: 2rem;
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.deal-abt{
-  flex: 0 1 48%;
-  border-radius: 10px;
+.deal-abt {
+  flex: 1 1 300px;
+  border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  background: white;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-md);
+  background: var(--white);
+  transition: var(--transition);
 }
 
 .deal-abt:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-xl);
 }
 
 .deal-abt img {
   width: 100%;
-  height: 250px; 
+  height: 250px;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.deal-abt:hover img {
+  transform: scale(1.1);
 }
 
 .deal-text-abt {
-  padding: 1rem;
-  color: #333;
+  padding: 1.5rem;
+  color: var(--text-color);
   text-align: left;
 }
 
 
 
 @media (max-width: 768px) {
-  .option {
-      max-width: 48%;
+  .hero_txt-abt h1 {
+    font-size: 2.5rem;
+    top: 40%;
   }
 
-  .deal {
-      flex: 0 1 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .option {
-      max-width: 100%;
+  .hero_txt-abt h2 {
+    font-size: 1.2rem;
+    top: 55%;
+    width: auto;
   }
 
-  .deal {
-      flex: 0 1 100%;
+  .option-abt {
+    max-width: 100%;
+  }
+
+  .deal-abt {
+    flex: 1 1 100%;
   }
 }

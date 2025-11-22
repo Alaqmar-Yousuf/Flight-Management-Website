@@ -1,45 +1,58 @@
-.flight-card, .ticket-form {
+.flight-card,
+.ticket-form {
   border: none;
   background-color: var(--white);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-md);
   padding: 2rem;
   margin: 1.5rem 0;
   transition: var(--transition);
   overflow: hidden;
 }
+
+.flight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 .hidden {
   display: none;
 }
 
-#ticket-form-container, #generated-ticket {
+#ticket-form-container,
+#generated-ticket {
   width: 100%;
   max-width: 800px;
   margin: 2rem auto;
-  background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+  background: var(--white);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  padding: 3rem;
   text-align: center;
   transition: var(--transition);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-#ticket-form-container h2, #generated-ticket h2 {
-  font-size: 2.25rem;
+#ticket-form-container h2,
+#generated-ticket h2 {
+  font-size: 2.5rem;
   color: var(--primary-color);
   margin-bottom: 1.5rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
 }
 
-#ticket-form-container p, #generated-ticket p {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 0.5rem;
+#ticket-form-container p,
+#generated-ticket p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 0.75rem;
 }
 
-#ticket-form-container strong, #generated-ticket strong {
-  font-weight: bold;
+#ticket-form-container strong,
+#generated-ticket strong {
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
 .form-group {
@@ -54,45 +67,50 @@
 .form-group label {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--secondary-color);
+  color: var(--text-color);
   margin-bottom: 0.5rem;
-  letter-spacing: 0.3px;
+  display: block;
 }
 
 .form-group input,
 .form-group select {
   padding: 0.875rem 1rem;
   font-size: 1rem;
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius);
   width: 100%;
   transition: var(--transition);
-  background-color: var(--white);
+  background-color: var(--bg-color);
   color: var(--text-color);
+  font-family: var(--font-body);
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(192, 160, 98, 0.1);
+  background-color: var(--white);
 }
 
 .search-btn {
-  padding: 0.75rem 3rem;
+  padding: 1rem 3rem;
   font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: rgb(53, 24, 42);
+  font-weight: 600;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 1.5rem;
+  transition: var(--transition);
+  margin-top: 2rem;
+  letter-spacing: 0.02em;
 }
 
 .search-btn:hover {
-  background-color: #a10030;
+  background-color: #d4b475;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .hero_txt-search {
@@ -102,40 +120,42 @@
 
 .hero_txt-search h1 {
   color: var(--white);
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  font-size: 3.5rem;
-  letter-spacing: -1px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 4rem;
+  letter-spacing: -0.02em;
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .search-container {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 2.5rem;
+  padding: 3rem;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--glass-border);
 }
 
 .search-container h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: var(--primary-color);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
 }
 
 .search-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .form-group {
@@ -181,21 +201,16 @@
 #results-container {
   width: 100%;
   max-width: 1000px;
-  margin: 2rem auto;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.flight-card {
-  position: relative;
-  overflow: hidden;
+  gap: 2rem;
 }
 
 .flight-card-image {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
   border-radius: var(--border-radius);
   margin-bottom: 1.5rem;
@@ -208,7 +223,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
   z-index: 1;
   transition: var(--transition);
   pointer-events: none;
@@ -218,11 +233,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition);
+  transition: transform 0.5s ease;
 }
 
 .flight-card:hover .flight-card-image img {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .flight-card:hover .flight-card-image::before {
@@ -230,11 +245,11 @@
 }
 
 .flight-info h3 {
-  font-size: 1.375rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 1rem;
-  letter-spacing: -0.3px;
+  font-family: var(--font-heading);
 }
 
 .flight-info p {
@@ -248,32 +263,41 @@
 }
 
 .flight-info p strong {
-  color: #333;
+  color: var(--primary-color);
+  font-weight: 600;
+  min-width: 100px;
 }
 
 .no-results {
-  font-size: 18px;
-  color: #e74c3c;
+  font-size: 1.25rem;
+  color: var(--text-light);
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
+  padding: 3rem;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
 }
 
 .book-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: bold;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
-  margin-top: 15px;
-  transition: background-color 0.3s ease;
+  margin-top: 1.5rem;
+  transition: var(--transition);
   width: 100%;
+  letter-spacing: 0.02em;
 }
 
 .book-btn:hover {
-  background-color: #0056b3;
+  background-color: #1e293b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .book-btn:focus {
@@ -282,10 +306,11 @@
 
 .filters-container {
   background: var(--white);
-  padding: 1.5rem 2rem;
+  padding: 2rem;
   border-radius: var(--border-radius);
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow);
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .filter-group {
@@ -296,19 +321,20 @@
 }
 
 .filter-group label {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--secondary-color);
+  color: var(--text-color);
   margin-bottom: 0.5rem;
-  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .filter-group input[type="number"],
 .filter-group select {
   padding: 0.75rem 1rem;
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius);
-  background-color: var(--white);
+  background-color: var(--bg-color);
   transition: var(--transition);
   color: var(--text-color);
   font-size: 0.95rem;
@@ -317,37 +343,41 @@
 .filter-group input[type="number"]:focus,
 .filter-group select:focus {
   outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(192, 160, 98, 0.1);
+  background-color: var(--white);
 }
 
 .filter-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: var(--transition);
+  font-weight: 600;
 }
 
 .filter-btn:hover {
-  background-color: #0056b3;
+  background-color: #1e293b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .duration {
-  color: #666;
+  color: var(--text-light);
   font-size: 0.9em;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 }
 
 .flight-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #ddd;
+  padding: 1.25rem;
+  background-color: var(--bg-color);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .flight-card {
@@ -360,45 +390,41 @@
   transition: transform 0.2s;
 }
 
-.flight-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
 .status {
   display: inline-flex;
   align-items: center;
   padding: 0.5rem 1rem;
   border-radius: 50px;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.02em;
 }
 
 .status.active {
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0.05) 100%);
-  color: #27ae60;
+  background: #dcfce7;
+  color: #166534;
 }
 
 .status.scheduled {
-  background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
-  color: #2980b9;
+  background: #e0f2fe;
+  color: #075985;
 }
 
 .status.delayed {
-  background: linear-gradient(135deg, rgba(241, 196, 15, 0.1) 0%, rgba(241, 196, 15, 0.05) 100%);
-  color: #f39c12;
+  background: #fef9c3;
+  color: #854d0e;
 }
 
 .status.cancelled {
-  background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(231, 76, 60, 0.05) 100%);
-  color: #c0392b;
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 .delay {
-  color: #dc3545;
+  color: #ef4444;
   font-size: 0.9em;
-  margin-top: 5px;
+  margin-top: 0.25rem;
+  font-weight: 500;
 }
 
 .loading {
@@ -406,42 +432,51 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  padding: 3rem;
+  padding: 4rem;
 }
 
 .spinner {
-  width: 48px;
-  height: 48px;
-  border: 3px solid var(--light-gray);
-  border-top-color: var(--accent-color);
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--bg-color);
+  border-top-color: var(--secondary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .retry-btn {
-  background-color: #dc3545;
+  background-color: var(--accent-color);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  margin-top: 10px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  margin-top: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: var(--transition);
+  font-weight: 600;
 }
 
 .retry-btn:hover {
-  background-color: #c82333;
+  background-color: #c0392b;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
-  #ticket-form-container, #generated-ticket {
-    width: 90%;
-    padding: 2rem;
+
+  #ticket-form-container,
+  #generated-ticket {
+    width: 95%;
+    padding: 1.5rem;
   }
 
   .flight-card {
@@ -456,20 +491,21 @@
   }
 
   .filters-container {
-    padding: 1.25rem;
+    padding: 1.5rem;
   }
 
   .filter-group {
-    margin-right: 1rem;
+    margin-right: 0;
+    width: 100%;
   }
 
   .search-container {
-    width: 90%;
+    width: 95%;
     padding: 1.5rem;
   }
 
   .flight-card-image {
-    height: 160px;
+    height: 180px;
   }
 }
 
@@ -486,7 +522,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(44, 62, 80, 0.6) 0%, rgba(52, 73, 94, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
   z-index: 1;
 }
-
