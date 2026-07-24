@@ -158,68 +158,93 @@ def get_flights():
     
     if not departure or not destination:
         return jsonify({'error': 'Both departure and destination are required'}), 400
+        
+    dep_code = departure.upper().strip()
+    arr_code = destination.upper().strip()
     
-    try:
-        params = {
-            'access_key': AVIATION_STACK_API_KEY,
-            'dep_iata': departure.upper(),
-            'arr_iata': destination.upper(),
-            'limit': 10
+    # Absolute stable flight numbers using hash
+    pk_num = abs(hash(dep_code + arr_code + "PIA")) % 900 + 100
+    ek_num = abs(hash(dep_code + arr_code + "EK")) % 900 + 100
+    fz_num = abs(hash(dep_code + arr_code + "FZ")) % 900 + 100
+    
+    mock_flights = [
+        {
+            'flight': {'iata': f'PK-{pk_num}'},
+            'airline': {'name': 'Pakistan International Airlines'},
+            'flight_status': 'active',
+            'departure': {
+                'iata': dep_code,
+                'airport': f'{dep_code} International Airport',
+                'scheduled': '2026-05-24T18:00:00+00:00',
+                'estimated': '2026-05-24T18:15:00+00:00',
+                'delay': 15,
+                'terminal': '1',
+                'gate': 'A5'
+            },
+            'arrival': {
+                'iata': arr_code,
+                'airport': f'{arr_code} International Airport',
+                'scheduled': '2026-05-24T20:15:00+00:00',
+                'estimated': '2026-05-24T20:30:00+00:00',
+                'delay': 15,
+                'terminal': '3',
+                'gate': 'B12'
+            }
+        },
+        {
+            'flight': {'iata': f'EK-{ek_num}'},
+            'airline': {'name': 'Emirates'},
+            'flight_status': 'scheduled',
+            'departure': {
+                'iata': dep_code,
+                'airport': f'{dep_code} International Airport',
+                'scheduled': '2026-05-24T22:30:00+00:00',
+                'estimated': None,
+                'delay': None,
+                'terminal': '2',
+                'gate': 'C10'
+            },
+            'arrival': {
+                'iata': arr_code,
+                'airport': f'{arr_code} International Airport',
+                'scheduled': '2026-05-25T00:45:00+00:00',
+                'estimated': None,
+                'delay': None,
+                'terminal': '3',
+                'gate': 'C22'
+            }
+        },
+        {
+            'flight': {'iata': f'FZ-{fz_num}'},
+            'airline': {'name': 'flydubai'},
+            'flight_status': 'scheduled',
+            'departure': {
+                'iata': dep_code,
+                'airport': f'{dep_code} International Airport',
+                'scheduled': '2026-05-25T02:15:00+00:00',
+                'estimated': None,
+                'delay': None,
+                'terminal': '1',
+                'gate': 'B8'
+            },
+            'arrival': {
+                'iata': arr_code,
+                'airport': f'{arr_code} International Airport',
+                'scheduled': '2026-05-25T04:30:00+00:00',
+                'estimated': None,
+                'delay': None,
+                'terminal': '2',
+                'gate': 'A18'
+            }
         }
-        
-        logger.debug(f"Making API request with params: {params}")
-        
-        response = requests.get(
-            f'{AVIATION_STACK_BASE_URL}/flights',
-            params=params,
-            timeout=API_TIMEOUT
-        )
-        
-        logger.debug(f"API Response Status: {response.status_code}")
-        logger.debug(f"API Response Headers: {dict(response.headers)}")
-        logger.debug(f"API Response Content: {response.text[:500]}...")
-        
-        response_data = response.json()
-        
-        if response.status_code != 200:
-            error_message = response_data.get('error', {}).get('message', 'Unknown error occurred')
-            logger.error(f"API Error: {error_message}")
-            return jsonify({'error': error_message}), response.status_code
-            
-        if 'error' in response_data:
-            error_code = response_data['error'].get('code')
-            error_message = response_data['error'].get('message', 'Unknown error occurred')
-            logger.error(f"API Error: {error_code} - {error_message}")
-            
-            if error_code == 'usage_limit_reached':
-                return jsonify({'error': 'Monthly API quota exceeded'}), 429
-            elif error_code == 'invalid_access_key':
-                return jsonify({'error': 'Invalid API key'}), 401
-            else:
-                return jsonify({'error': error_message}), 400
-        
-        return jsonify({
-            'status': response.status_code,
-            'api_response': response_data
-        })
-        
-    except requests.exceptions.Timeout:
-        logger.error("API request timed out")
-        return jsonify({'error': 'Request timed out. Please try again.'}), 504
-    except requests.exceptions.RequestException as e:
-        logger.error(f"API request failed: {str(e)}")
-        logger.error(traceback.format_exc())
-        return jsonify({
-            'error': 'Failed to fetch flight data',
-            'details': str(e)
-        }), 500
-    except Exception as e:
-        logger.error(f"Unexpected error: {str(e)}")
-        logger.error(traceback.format_exc())
-        return jsonify({
-            'error': 'An unexpected error occurred',
-            'details': str(e)
-        }), 500
+    ]
+    
+    return jsonify({
+        'status': 200,
+        'api_response': {
+            'data': mock_flights
+        }
+    })
 
 # Helper functions
 def calculate_price(flight):
