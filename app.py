@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, session, jsonify
 import sqlite3
 import logging
+import os
 from flask_caching import Cache
 from dotenv import load_dotenv
 
@@ -29,9 +30,12 @@ cache = Cache(app, config={
     'CACHE_DEFAULT_TIMEOUT': 300  # Cache for 5 minutes
 })
 
+# Database path configuration (use /tmp/database.db in Vercel's read-only filesystem)
+DB_PATH = '/tmp/database.db' if os.environ.get('VERCEL') else 'database.db'
+
 # Database initialization
 def init_db():
-    with sqlite3.connect('database.db') as conn:
+    with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -66,7 +70,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        with sqlite3.connect('database.db') as conn:
+        with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
             cursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password))
             user = cursor.fetchone()
@@ -85,7 +89,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        with sqlite3.connect('database.db') as conn:
+        with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
             try:
                 cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
