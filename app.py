@@ -1,13 +1,9 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, session, jsonify
 import sqlite3
-import requests
-import os
-import math
 import logging
-import traceback
-from datetime import datetime
 from flask_caching import Cache
 from dotenv import load_dotenv
+
 
 # Configure logging
 logging.basicConfig(
@@ -32,42 +28,6 @@ cache = Cache(app, config={
     'CACHE_TYPE': 'simple',
     'CACHE_DEFAULT_TIMEOUT': 300  # Cache for 5 minutes
 })
-
-# Aviation Stack API configuration
-AVIATION_STACK_API_KEY = 'cdceb61cfcaf3f5ae2e0d41062276e89'
-AVIATION_STACK_BASE_URL = 'http://api.aviationstack.com/v1'
-API_TIMEOUT = 30
-
-# Test endpoint to verify API
-@app.route('/test_api')
-def test_api():
-    """Test endpoint to verify API connectivity"""
-    try:
-        logger.debug("Making test API request")
-        response = requests.get(
-            f'{AVIATION_STACK_BASE_URL}/flights',
-            params={
-                'access_key': AVIATION_STACK_API_KEY,
-                'limit': 1
-            },
-            timeout=API_TIMEOUT
-        )
-        logger.debug(f"API Response Status: {response.status_code}")
-        logger.debug(f"API Response Headers: {dict(response.headers)}")
-        logger.debug(f"API Response Content: {response.text[:500]}...")
-        
-        return jsonify({
-            'status': response.status_code,
-            'headers': dict(response.headers),
-            'content': response.json()
-        })
-    except Exception as e:
-        logger.error(f"Test API Error: {str(e)}")
-        logger.error(traceback.format_exc())
-        return jsonify({
-            'error': str(e),
-            'traceback': traceback.format_exc()
-        }), 500
 
 # Database initialization
 def init_db():
@@ -245,52 +205,6 @@ def get_flights():
             'data': mock_flights
         }
     })
-
-# Helper functions
-def calculate_price(flight):
-    try:
-        base_price = 100
-        
-        # Distance-based pricing
-        dep_lat = float(flight.get('departure', {}).get('latitude', 0))
-        dep_lon = float(flight.get('departure', {}).get('longitude', 0))
-        arr_lat = float(flight.get('arrival', {}).get('latitude', 0))
-        arr_lon = float(flight.get('arrival', {}).get('longitude', 0))
-        
-        distance = calculate_distance(dep_lat, dep_lon, arr_lat, arr_lon)
-        distance_factor = math.sqrt(distance) * 0.1
-        
-        # Time of day pricing
-        departure_time = datetime.fromisoformat(flight.get('departure', {}).get('scheduled', '').replace('Z', '+00:00'))
-        time_factor = 1.0
-        if 6 <= departure_time.hour <= 9:  # Morning rush
-            time_factor = 1.3
-        elif 16 <= departure_time.hour <= 19:  # Evening rush
-            time_factor = 1.2
-        
-        # Season pricing
-        month = departure_time.month
-        season_factor = 1.0
-        if month in [6, 7, 8]:  # Summer
-            season_factor = 1.2
-        elif month in [12, 1]:  # Holiday season
-            season_factor = 1.3
-        
-        price = (base_price + distance_factor) * time_factor * season_factor
-        return round(price / 10) * 10
-        
-    except Exception as e:
-        app.logger.error(f"Price calculation error: {str(e)}")
-        return 500
-
-def calculate_distance(lat1, lon1, lat2, lon2):
-    R = 6371  # Earth's radius in kilometers
-    lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
-    dlat = lat2 - lat1
-    dlon = lon2 - lon1
-    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
-    c = 2 * math.asin(math.sqrt(a))
-    return R * c
 
 if __name__ == '__main__':
     # Enable debug mode for detailed error messages

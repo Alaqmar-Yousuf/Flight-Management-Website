@@ -44,23 +44,176 @@
             <p><strong>From:</strong> <span id="ticket-departure"></span></p>
             <p><strong>To:</strong> <span id="ticket-destination"></span></p>
             <p><strong>Departure Time:</strong> <span id="ticket-time"></span></p>
-            <p><strong>Price:</strong> $<span id="ticket-price"></span></p>
+            <p><strong>Base Price:</strong> $<span id="ticket-price"></span></p>
+            <p><strong>Seat Adjustment:</strong> +$<span id="ticket-seat-adj">0</span></p>
+            <p class="total-price-row"><strong>Total Price:</strong> $<span id="ticket-total-price"></span></p>
+
+            <!-- Flight Status Timeline Tracker -->
+            <div class="timeline-container-wrapper">
+                <h4>Flight Status Timeline</h4>
+                <div class="timeline-container" id="detailsTimeline">
+                    <div class="timeline-line">
+                        <div class="timeline-progress" id="detailsTimelineProgress"></div>
+                    </div>
+                    <div class="timeline-step" data-step="1">
+                        <div class="step-circle"><i class="fas fa-check"></i></div>
+                        <span class="step-label">Booking Confirmed</span>
+                    </div>
+                    <div class="timeline-step" data-step="2">
+                        <div class="step-circle"><i class="fas fa-passport"></i></div>
+                        <span class="step-label">Check-In Open</span>
+                    </div>
+                    <div class="timeline-step" data-step="3">
+                        <div class="step-circle"><i class="fas fa-ticket-alt"></i></div>
+                        <span class="step-label">Boarding</span>
+                    </div>
+                    <div class="timeline-step" data-step="4">
+                        <div class="step-circle"><i class="fas fa-plane-departure"></i></div>
+                        <span class="step-label">In-Flight</span>
+                    </div>
+                    <div class="timeline-step" data-step="5">
+                        <div class="step-circle"><i class="fas fa-plane-arrival"></i></div>
+                        <span class="step-label">Arrived</span>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <form id="ticketForm" class="ticket-form">
+            <!-- Passenger Details -->
             <div class="form-group">
                 <label for="passenger-name">
                     <i class="fas fa-user"></i>
                     Passenger Name
                 </label>
-                <input type="text" id="passenger-name" name="passenger-name" required>
+                <input type="text" id="passenger-name" name="passenger-name" value="{% if 'username' in session %}{{ session['username'] }}{% endif %}" required>
             </div>
-            <button type="submit" class="book-btn">
-                <i class="fas fa-ticket-alt"></i>
-                Book Flight
+
+            <!-- Flight Route Map Section -->
+            <div class="route-map-wrapper">
+                <h3>Flight Route Map</h3>
+                <div class="map-card">
+                    <div class="map-airport map-dep">
+                        <span class="airport-code" id="map-dep-code">DEP</span>
+                        <span class="airport-name" id="map-dep-name">Departure Airport</span>
+                    </div>
+                    <div class="map-canvas-container">
+                        <svg class="route-svg" viewBox="0 0 400 120" width="100%" height="100%">
+                            <path id="routePath" d="M 40,80 Q 200,10 360,80" fill="none" stroke="var(--secondary-color)" stroke-width="2.5" stroke-dasharray="6,6" />
+                            <g id="mapPlane" class="map-plane-group">
+                                <text class="plane-icon-text" font-family="Font Awesome 6 Free" font-weight="900" font-size="18" fill="var(--secondary-color)" text-anchor="middle" dominant-baseline="central">&#xf072;</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="map-airport map-arr">
+                        <span class="airport-code" id="map-arr-code">ARR</span>
+                        <span class="airport-name" id="map-arr-name">Destination Airport</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seat Selection Section -->
+            <div class="seat-selection-wrapper">
+                <h3>Select Your Seat</h3>
+                <div class="seat-legend">
+                    <div class="legend-item"><span class="legend-color seat-first"></span> First Class (+$150)</div>
+                    <div class="legend-item"><span class="legend-color seat-business"></span> Business Class (+$50)</div>
+                    <div class="legend-item"><span class="legend-color seat-economy"></span> Economy Class (+$0)</div>
+                    <div class="legend-item"><span class="legend-color seat-occupied"></span> Occupied</div>
+                    <div class="legend-item"><span class="legend-color seat-selected-legend"></span> Selected</div>
+                </div>
+                <div class="cabin-container">
+                    <div class="cabin-front">Front of Aircraft</div>
+                    <div class="cabin-seats" id="cabinSeatsGrid">
+                        <!-- Seats will be dynamically generated by Javascript -->
+                    </div>
+                    <div class="cabin-back">Back of Aircraft</div>
+                </div>
+                <div class="selected-seat-badge">
+                    Selected Seat: <span id="selected-seat-label" class="badge-value">None</span>
+                </div>
+            </div>
+
+            <!-- Payment Details Section -->
+            <div class="payment-section-wrapper">
+                <h3>Payment Details</h3>
+                <div class="payment-container">
+                    <!-- Digital Credit Card -->
+                    <div class="card-container">
+                        <div class="credit-card" id="creditCard">
+                            <!-- Card Front -->
+                            <div class="card-side card-front">
+                                <div class="card-header-logo">
+                                    <i class="fas fa-plane-departure"></i>
+                                    <span>SkyPay</span>
+                                </div>
+                                <div class="card-chip">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <div class="card-number" id="card-num-display">•••• •••• •••• ••••</div>
+                                <div class="card-footer-info">
+                                    <div class="card-holder">
+                                        <span class="card-label">CARDHOLDER</span>
+                                        <span class="card-value" id="card-name-display">FULL NAME</span>
+                                    </div>
+                                    <div class="card-expiry">
+                                        <span class="card-label">EXPIRES</span>
+                                        <span class="card-value" id="card-expiry-display">MM/YY</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Back -->
+                            <div class="card-side card-back">
+                                <div class="card-magnetic-strip"></div>
+                                <div class="card-signature-area">
+                                    <span class="card-label">CVV</span>
+                                    <div class="card-cvv-box" id="card-cvv-display">•••</div>
+                                </div>
+                                <div class="card-back-text">
+                                    Safe & Secure | Powered by SkyPay
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Payment Inputs -->
+                    <div class="payment-fields">
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="4000 1234 5678 9010" maxlength="19" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-holder-name">Name on Card</label>
+                            <input type="text" id="card-holder-name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-expiry">Expiry Date</label>
+                                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="card-cvv">CVV</label>
+                                <input type="password" id="card-cvv" placeholder="•••" maxlength="3" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="book-btn" id="payAndBookBtn">
+                <i class="fas fa-credit-card"></i>
+                Pay & Book Flight
             </button>
         </form>
     </section>
+
+    <!-- Payment Processing Loader -->
+    <div id="payment-loading" class="payment-loading hidden">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3>Processing Payment...</h3>
+            <p>We are verifying your credit details securely. Please do not refresh.</p>
+        </div>
+    </div>
 
     <!-- Generated Ticket Section -->
     <section id="generated-ticket" class="ticket-section hidden">
@@ -84,6 +237,10 @@
                         <span class="label">Flight No.</span>
                         <span id="final-ticket-flight-no" class="value"></span>
                     </div>
+                    <div class="flight-detail">
+                        <span class="label">Selected Seat</span>
+                        <span id="final-ticket-seat" class="value" style="color: var(--secondary-color); font-weight: bold; font-size: 1.1rem;"></span>
+                    </div>
                     <div class="flight-route">
                         <div class="departure">
                             <span class="label">From</span>
@@ -102,8 +259,37 @@
                         <span id="final-ticket-time" class="value"></span>
                     </div>
                     <div class="flight-detail">
-                        <span class="label">Price</span>
-                        <span class="value">$<span id="final-ticket-price"></span></span>
+                        <span class="label">Total Price (Paid)</span>
+                        <span class="value" style="color: #27ae60; font-weight: bold;">$<span id="final-ticket-price"></span></span>
+                    </div>
+                </div>
+                
+                <!-- Ticket Flight Status Timeline Tracker -->
+                <div class="ticket-timeline-wrapper">
+                    <div class="timeline-container" id="ticketTimeline">
+                        <div class="timeline-line">
+                            <div class="timeline-progress" id="ticketTimelineProgress"></div>
+                        </div>
+                        <div class="timeline-step" data-step="1">
+                            <div class="step-circle"><i class="fas fa-check"></i></div>
+                            <span class="step-label">Booking Confirmed</span>
+                        </div>
+                        <div class="timeline-step" data-step="2">
+                            <div class="step-circle"><i class="fas fa-passport"></i></div>
+                            <span class="step-label">Check-In Open</span>
+                        </div>
+                        <div class="timeline-step" data-step="3">
+                            <div class="step-circle"><i class="fas fa-ticket-alt"></i></div>
+                            <span class="step-label">Boarding</span>
+                        </div>
+                        <div class="timeline-step" data-step="4">
+                            <div class="step-circle"><i class="fas fa-plane-departure"></i></div>
+                            <span class="step-label">In-Flight</span>
+                        </div>
+                        <div class="timeline-step" data-step="5">
+                            <div class="step-circle"><i class="fas fa-plane-arrival"></i></div>
+                            <span class="step-label">Arrived</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -393,6 +579,604 @@
     .ticket-card {
         box-shadow: none;
         border: 1px solid #ddd;
+    }
+}
+
+/* ==========================================
+   Seat Selection & Payment Styling
+   ========================================== */
+
+/* Seat Selection Grid */
+.seat-selection-wrapper {
+    margin-top: 2.5rem;
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+}
+
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.seat-first { background-color: #f1c40f; border: 1px solid #d4ac0d; }
+.seat-business { background-color: #3498db; border: 1px solid #2980b9; }
+.seat-economy { background-color: #2ecc71; border: 1px solid #27ae60; }
+.seat-occupied { background-color: #e2e8f0; border: 1px solid #cbd5e1; }
+.seat-selected-legend { background-color: #9b59b6; border: 1px solid #8e44ad; }
+
+.cabin-container {
+    border: 3px solid #cbd5e1;
+    border-radius: 40px 40px 15px 15px;
+    padding: 2.5rem 1.5rem;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fafbfc;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
+}
+
+.cabin-front {
+    text-align: center;
+    font-weight: bold;
+    color: #94a3b8;
+    border-bottom: 2px dashed #e2e8f0;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.cabin-back {
+    text-align: center;
+    font-weight: bold;
+    color: #94a3b8;
+    border-top: 2px dashed #e2e8f0;
+    padding-top: 1rem;
+    margin-top: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.cabin-seats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) 2rem repeat(3, 1fr);
+    gap: 0.6rem 0.4rem;
+    justify-items: center;
+    align-items: center;
+}
+
+.seat {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.seat:hover:not(.seat-occupied) {
+    transform: scale(1.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.seat.seat-occupied {
+    background-color: #e2e8f0 !important;
+    color: #94a3b8 !important;
+    border: 1px solid #cbd5e1 !important;
+    cursor: not-allowed;
+}
+
+.seat.selected {
+    background-color: #9b59b6 !important;
+    color: #fff !important;
+    border: 1px solid #8e44ad !important;
+    transform: scale(1.15);
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.6);
+}
+
+.aisle-space {
+    grid-column: 4;
+}
+
+.selected-seat-badge {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.badge-value {
+    color: var(--secondary-color);
+    background-color: #ebf5fb;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    border: 1px solid #d4e6f1;
+    display: inline-block;
+    margin-left: 0.5rem;
+    min-width: 60px;
+}
+
+/* Payment Styling */
+.payment-section-wrapper {
+    margin-top: 2.5rem;
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+}
+
+.payment-container {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+/* Digital Credit Card */
+.card-container {
+    perspective: 1000px;
+    width: 360px;
+    height: 215px;
+    flex-shrink: 0;
+}
+
+.credit-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    border-radius: 15px;
+    line-height: 1.1;
+}
+
+.credit-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    padding: 1.25rem 1.5rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-front {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    z-index: 2;
+}
+
+.card-back {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    transform: rotateY(180deg);
+    padding: 1.5rem 0;
+}
+
+.card-header-logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 1.5px;
+}
+
+.card-chip {
+    font-size: 1.8rem;
+    color: #f1c40f;
+    opacity: 0.85;
+    margin-top: 0.2rem;
+}
+
+.card-number {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+    margin: 0.7rem 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+.card-footer-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-holder, .card-expiry {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-label {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+}
+
+.card-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+}
+
+.card-magnetic-strip {
+    width: 100%;
+    height: 40px;
+    background-color: #1a202c;
+    margin-top: 0.5rem;
+}
+
+.card-signature-area {
+    background: repeating-linear-gradient(45deg, #e2e8f0, #e2e8f0 4px, #cbd5e1 4px, #cbd5e1 8px);
+    height: 38px;
+    margin: 1.5rem 1.5rem 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 12px;
+}
+
+.card-cvv-box {
+    background-color: #fff;
+    color: #1a202c;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+}
+
+.card-back-text {
+    text-align: center;
+    font-size: 0.65rem;
+    opacity: 0.65;
+    margin-top: 1rem;
+    padding: 0 1rem;
+}
+
+/* Payment Inputs */
+.payment-fields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.total-price-row {
+    font-size: 1.3rem;
+    color: #27ae60;
+    border-top: 2px dashed #e2e8f0;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+/* Processing Overlay */
+.payment-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    color: #fff;
+}
+
+.payment-loading.hidden {
+    display: none !important;
+}
+
+.loading-content {
+    text-align: center;
+    background-color: #1e293b;
+    padding: 3.5rem;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    max-width: 480px;
+    width: 90%;
+}
+
+.payment-loading .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255,255,255,0.1);
+    border-top: 6px solid var(--secondary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1.8rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+    .payment-container {
+        flex-direction: column-align;
+        flex-direction: column;
+    }
+    
+    .card-container {
+        margin: 0 auto;
+    }
+}
+
+/* ==========================================
+   Flight Map & Timeline Tracker & 3D Tilt Styling
+   ========================================== */
+
+/* Flight Map Card */
+.route-map-wrapper {
+    margin-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 1.5rem;
+}
+
+.map-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--white);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow-sm);
+    margin-top: 1rem;
+    transition: var(--transition);
+}
+
+.map-airport {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.airport-code {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    letter-spacing: 1px;
+}
+
+.airport-name {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.map-canvas-container {
+    flex: 1;
+    height: 100px;
+    position: relative;
+    overflow: visible;
+}
+
+.route-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.map-plane-group {
+    offset-path: path("M 40,80 Q 200,10 360,80");
+    offset-rotate: auto 90deg;
+    animation: flyAlongPath 6s infinite linear;
+}
+
+@keyframes flyAlongPath {
+    0% { offset-distance: 0%; }
+    100% { offset-distance: 100%; }
+}
+
+.plane-icon-text {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    fill: var(--secondary-color);
+}
+
+/* Timeline Tracker Styling */
+.timeline-container-wrapper {
+    margin-top: 1.5rem;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+    padding-top: 1.5rem;
+}
+
+.timeline-container-wrapper h4 {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0 0.5rem;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 16px;
+    left: 2rem;
+    right: 2rem;
+    height: 4px;
+    background-color: #cbd5e1;
+    z-index: 1;
+    border-radius: 2px;
+}
+
+.timeline-progress {
+    height: 100%;
+    width: 20%;
+    background-color: var(--secondary-color);
+    transition: width 1s ease-in-out;
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(192, 160, 98, 0.4);
+}
+
+.timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.step-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--white);
+    border: 3px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    transition: all 0.4s ease;
+}
+
+.step-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-align: center;
+    transition: color 0.4s ease;
+    max-width: 90px;
+    line-height: 1.2;
+}
+
+.timeline-step.active .step-circle,
+.timeline-step.completed .step-circle {
+    border-color: var(--secondary-color);
+    background-color: var(--secondary-color);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(192, 160, 98, 0.3);
+}
+
+.timeline-step.active .step-label {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.timeline-step.completed .step-label {
+    color: var(--text-color);
+}
+
+/* Timeline specific to generated ticket card */
+.ticket-timeline-wrapper {
+    margin-top: 2rem;
+    border-top: 1px dashed rgba(0, 0, 0, 0.12);
+    padding-top: 1.5rem;
+}
+
+/* 3D Boarding Pass Tilt Parallax Effect */
+.ticket-card {
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.ticket-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+.ticket-card > * {
+    transform: translateZ(20px); /* Gives child elements depth */
+}
+
+@media (max-width: 600px) {
+    .timeline-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding-left: 2rem;
+    }
+    
+    .timeline-line {
+        top: 0;
+        bottom: 0;
+        left: 31px;
+        right: auto;
+        width: 4px;
+        height: auto;
+    }
+    
+    .timeline-progress {
+        width: 100%;
+        height: 20%;
+        transition: height 1s ease-in-out;
+    }
+    
+    .timeline-step {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .step-label {
+        max-width: none;
+        text-align: left;
     }
 }
 </style>
